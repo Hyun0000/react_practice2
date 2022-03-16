@@ -1,19 +1,20 @@
 import { useState } from 'react';
 import { Navbar, Container, Nav, NavDropdown, Button } from 'react-bootstrap';
-// react-bootstrap '라이브러리'에서 import 해오는 것이다.
 import './App.css';
-import Data, {name1 as apple, name2} from './data.js'
-// import {name1 as apple, name2} from './data.js'
+import productData, {name1 as apple, name2} from './data.js';
+import {name3} from './data.js';
+// 설사 1개의 변수만 import 하더라도 {중괄호}는 반드시 써야한다.(안쓰면 error 발생)
 
 function App() {
   // 상품데이터
-  let [shoes, shoesChange] = useState(Data);
+  let [shoes, shoesChange] = useState(productData);
 
   return (
     <div className="App">
+      <div>{name3}</div>
       <Navbar bg="light" expand="lg">
         <Container>
-          <Navbar.Brand href="#home">Garden_Park</Navbar.Brand>
+          <Navbar.Brand href="#home">Garden</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
@@ -37,31 +38,11 @@ function App() {
         <div className="row">
       {
         shoes.map(function(e, index) {
-          return (<Plist index={index} shoes={shoes}/>);
+          return (<Card index={index} shoes={shoes} key={index}/>);
         })
       }
         </div>
       </div>  
-
-      {/* <div className="container">
-        <div className="row">
-          <div className="col-md-4">
-            <img src="https://codingapple1.github.io/shop/shoes1.jpg" alt="" srcSet="" width="100%"/>
-            <h4>{shoes[0].title}</h4>
-            <p>{shoes[0].content} & {shoes[0].price}</p>
-          </div>
-          <div className="col-md-4">
-            <img src="https://codingapple1.github.io/shop/shoes2.jpg" alt="" srcSet="" width="100%"/>
-            <h4>{shoes[1].title}</h4>
-            <p>{shoes[1].content} & {shoes[1].price}</p>
-          </div>
-          <div className="col-md-4">
-            <img src="https://codingapple1.github.io/shop/shoes3.jpg" alt="" srcSet="" width="100%"/>
-            <h4>{shoes[2].title}</h4>
-            <p>{shoes[2].content} & {shoes[2].price}</p>
-          </div>
-        </div>
-      </div>   */}
 
     </div>
   )
@@ -79,7 +60,7 @@ function Jumbotron() {
   )
 }
 
-function Plist(props) {
+function Card(props) {
   let test = `https://codingapple1.github.io/shop/shoes${props.index + 1}.jpg`
   return(
       <div className="col-md-4">
