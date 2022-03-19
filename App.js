@@ -1,11 +1,19 @@
+// React 내장 함수 부분
 import { useState } from 'react';
+
+// Component 부분
 import { Navbar, Container, Nav, NavDropdown, Button } from 'react-bootstrap';
-import './App.css';
+import Detail from './Detail';
+
+// 데이터 부분
 import productData, {name1 as apple, name2} from './data.js';
 import {name3} from './data.js';
-//'./data.js'에서 .js를 생략해도 된다.
-// 설사 1개의 변수만 import 하더라도 {중괄호}는 반드시 써야한다.(안쓰면 error 발생)
+
+// Router 부분
 import { Link, Route, Switch } from "react-router-dom";
+
+// css 부분
+import './App.css';
 
 function App() {
   // 상품데이터
@@ -20,8 +28,10 @@ function App() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="#home">Home</Nav.Link>
-              <Nav.Link href="#link">Link</Nav.Link>
+
+              <Nav.Link><Link to="/">Home</Link></Nav.Link>
+              <Nav.Link><Link to="/detail">Detail</Link></Nav.Link>
+
               <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -34,39 +44,31 @@ function App() {
         </Container>
       </Navbar>
 
-      <Route exact path="/">
-        {/* <div>메인페이지인데요</div> */}
-        <Jumbotron/>
-        <div className="container">
-          <div className="row">
-        {
-          shoes.map(function(e, index) {
-            return (<Card index={index} shoes={shoes} key={index}/>);
-          })
-        }
-          </div>
-        </div>
-      </Route>
-
-      <Route path="/detail">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-6">
-              <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
+      <Switch>
+        <Route exact path="/">
+          <Jumbotron/>
+          <>
+            <div className="container">
+              <div className="row">
+            {
+              shoes.map(function(e, index) {
+                return (<Card index={index} shoes={shoes} key={index}/>);
+              })
+            }
+              </div>
             </div>
-            <div className="col-md-6 mt-4">
-              <h4 className="pt-5">상품명</h4>
-              <p>상품설명</p>
-              <p>120000원</p>
-              <button className="btn btn-danger">주문하기</button> 
-            </div>
-          </div>
-        </div> 
-      </Route>
+          </>
+        </Route>
 
+        <Route path="/detail">
+          <Detail/>
+          {/* Detail.js에서 import 한 Detail Component 사용 */}
+        </Route>
 
-      
-
+        <Route path="/:id">
+          <div>새로 만든 route입니다</div>
+        </Route>
+      </Switch>
     </div>
   )
 }
