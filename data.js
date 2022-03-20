@@ -1,12 +1,6 @@
 let data = 
 [
     {
-        id : 0,
-        title : "White and Black",
-        content : "Born in France",
-        price : 120000
-    },
-    {
         id : 1,
         title : "Red Knit",
         content : "Born in Seoul",
@@ -17,8 +11,37 @@ let data =
         title : "Grey Yordan",
         content : "Born in the States",
         price : 130000
+    },
+    {
+        id : 0,
+        title : "White and Black",
+        content : "Born in France",
+        price : 120000
     }
 ];
+
+// [
+//     {
+//         id : 0,
+//         title : "White and Black",
+//         content : "Born in France",
+//         price : 120000
+//     },
+//     {
+//         id : 1,
+//         title : "Red Knit",
+//         content : "Born in Seoul",
+//         price : 110000
+//     },
+//     {
+//         id : 2,
+//         title : "Grey Yordan",
+//         content : "Born in the States",
+//         price : 130000
+//     }
+// ];
+
+
 
 export default data;
 // export default는 한 파일당 딱 한번만 사용 가능

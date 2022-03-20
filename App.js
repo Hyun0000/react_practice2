@@ -29,8 +29,8 @@ function App() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
 
-              <Nav.Link><Link to="/">Home</Link></Nav.Link>
-              <Nav.Link><Link to="/detail">Detail</Link></Nav.Link>
+              {/* <Nav.Link><Link to="/">Home</Link></Nav.Link>
+              <Nav.Link><Link to="/detail">Detail</Link></Nav.Link> */}
 
               <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -44,7 +44,7 @@ function App() {
         </Container>
       </Navbar>
 
-      <Switch>
+      {/* <Switch>
         <Route exact path="/">
           <Jumbotron/>
           <>
@@ -61,14 +61,17 @@ function App() {
         </Route>
 
         <Route path="/detail">
-          <Detail/>
-          {/* Detail.js에서 import 한 Detail Component 사용 */}
+          <Detail shoes={shoes}/>
         </Route>
 
         <Route path="/:id">
           <div>새로 만든 route입니다</div>
         </Route>
-      </Switch>
+      </Switch> */}
+
+      <Route path="/detail/:id">
+        <Detail shoes={shoes}/>
+      </Route>
     </div>
   )
 }
