@@ -69,7 +69,7 @@ function App() {
         </Route>
       </Switch> */}
 
-      <Route path="/detail/:id">
+      <Route path="/detail/:id/:name">
         <Detail shoes={shoes}/>
       </Route>
     </div>

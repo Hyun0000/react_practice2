@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 
 function Detail(props) {
     let history = useHistory();
-    let {id} = useParams();
+    let {id, name} = useParams();
     
     function originPdata() {
         let obj;
@@ -19,11 +19,23 @@ function Detail(props) {
     const [pData, pDataChange] = useState(originPdata);
 
     let pData2 = props.shoes.find(e => e.id == id);    
+    // 간략하게 작성했기에 return도 쓰지 않았다.
 
     return (
         <div className="container">
 
-            <div>{id}</div>
+            {
+                props.shoes.map(() => {
+                    return (<div>{id}</div>);
+                })
+            }
+
+            {/* forEach 쓰니까 출력이 안 된다. */}
+            {
+                props.shoes.forEach(() => {
+                    return (<div>2</div>);
+                })
+            }
 
             <div className="row">
                 <div className="col-md-6">
@@ -37,12 +49,13 @@ function Detail(props) {
                     <h4 className="pt-5">{pData2.title}</h4>
                     <p>{pData2.content}</p>
                     <p>{pData2.price}원</p>
-
+                    
                 {/*
                     <h4 className="pt-5">{props.shoes[id].title}</h4>
                     <p>{props.shoes[id].content}</p>
                     <p>{props.shoes[id].price}원</p>
                 */}
+
                     <button className="btn btn-danger">주문하기</button>
                     <button className="btn btn-danger" onClick={() => {history.goBack();}}>뒤로가기</button>
                     <button className="btn btn-danger" onClick={() => {history.push("/")}}>메인페이지로!!!</button> 
@@ -53,3 +66,4 @@ function Detail(props) {
 }
 
 export default Detail;
+
