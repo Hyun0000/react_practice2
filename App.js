@@ -44,7 +44,7 @@ function App() {
         </Container>
       </Navbar>
 
-      {/* <Switch>
+      <Switch>
         <Route exact path="/">
           <Jumbotron/>
           <>
@@ -60,18 +60,16 @@ function App() {
           </>
         </Route>
 
-        <Route path="/detail">
+        <Route path="/detail/:id">
           <Detail shoes={shoes}/>
         </Route>
 
         <Route path="/:id">
           <div>새로 만든 route입니다</div>
         </Route>
-      </Switch> */}
+      </Switch>
 
-      <Route path="/detail/:id/:name">
-        <Detail shoes={shoes}/>
-      </Route>
+
     </div>
   )
 }
