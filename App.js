@@ -11,6 +11,7 @@ import {name3} from './data.js';
 
 // Router 부분
 import { Link, Route, Switch } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 
 // css 부분
 import './App.css';
@@ -29,8 +30,13 @@ function App() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
 
-              {/* <Nav.Link><Link to="/">Home</Link></Nav.Link>
-              <Nav.Link><Link to="/detail">Detail</Link></Nav.Link> */}
+              <Nav.Link as={Link} to="/">Home</Nav.Link>
+              <Nav.Link as={Link} to="/detail/0">Detail</Nav.Link>
+
+              {/* 기존에 Warning 메세지가 뜨는 태그
+                <Nav.Link><Link to="/">Home</Link></Nav.Link>
+                <Nav.Link><Link to="/detail/0">Detail</Link></Nav.Link>
+              */}
 
               <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>

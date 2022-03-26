@@ -1,0 +1,51 @@
+// 변수 사용
+$mainColor : #ff0000;
+
+.red {
+    color : $mainColor;
+}
+// ============================================================
+// 알림창 UI
+
+// @extend문법
+.my-alert {
+    padding : 15px;
+    border-radius : 5px;
+    max-width : 500px;
+    width : 100%;
+    margin : auto;
+    background : #eeeeee;
+}
+
+.my-alert2 {
+    @extend .my-alert;
+    background : yellow;
+}
+
+.my-alert p {
+    margin-bottom : 0;
+}
+// ============================================================
+// @mixin / @include 문법
+// @mixin alertBack() {
+//     background : #eeeeee;
+//     padding : 15px;
+//     border-radius : 5px;
+//     max-width : 500px;
+//     width : 100%;
+//     margin : auto;
+//     margin-bottom : 0;
+// }
+
+// .my-alert {
+//     @include alertBack();
+// }
+
+// .my-alert2 {
+//     @include alertBack();
+//     background : green;
+// }
+
+// .my-alert p {
+//     margin-bottom : 0;
+// }
