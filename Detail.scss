@@ -1,3 +1,4 @@
+// ============================================================
 // 변수 사용
 $mainColor : #ff0000;
 
@@ -5,46 +6,49 @@ $mainColor : #ff0000;
     color : $mainColor;
 }
 // ============================================================
+// @import
+@import './_reset.scss';
+// ============================================================
 // 알림창 UI
 
 // @extend문법
-.my-alert {
-    padding : 15px;
-    border-radius : 5px;
-    max-width : 500px;
-    width : 100%;
-    margin : auto;
-    background : #eeeeee;
-}
-
-.my-alert2 {
-    @extend .my-alert;
-    background : yellow;
-}
-
-.my-alert p {
-    margin-bottom : 0;
-}
-// ============================================================
-// @mixin / @include 문법
-// @mixin alertBack() {
-//     background : #eeeeee;
+// .my-alert {
 //     padding : 15px;
 //     border-radius : 5px;
 //     max-width : 500px;
 //     width : 100%;
 //     margin : auto;
-//     margin-bottom : 0;
-// }
-
-// .my-alert {
-//     @include alertBack();
+//     background : #eeeeee;
 // }
 
 // .my-alert2 {
-//     @include alertBack();
-//     background : green;
+//     @extend .my-alert;
+//     background : yellow;
 // }
+
+// .my-alert p {
+//     margin-bottom : 0;
+// }
+// ============================================================
+// @mixin / @include 문법
+@mixin alertBack($widthSize) {
+    background : #eeeeee;
+    padding : 15px;
+    border-radius : 5px;
+    max-width : $widthSize;
+    width : 100%;
+    margin : auto;
+    margin-bottom : 0;
+}
+
+.my-alert {
+    @include alertBack(300px);
+}
+
+.my-alert2 {
+    @include alertBack(400px);
+    background : skyblue;
+}
 
 // .my-alert p {
 //     margin-bottom : 0;

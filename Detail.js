@@ -90,6 +90,10 @@ function Detail(props) {
                 null
             }
 
+                <div className="my-alert2">
+                    <p>재고가 얼마 남지 않았습니다</p>
+                </div>
+
 
 
             <Box>
