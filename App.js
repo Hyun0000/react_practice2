@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 // Component 부분
 import { Navbar, Container, Nav, NavDropdown, Button } from 'react-bootstrap';
-import Detail from './Detail';
+import Detail from './Detail.js';
 
 // 데이터 부분
 import productData, {name1 as apple, name2} from './data.js';

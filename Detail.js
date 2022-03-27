@@ -25,46 +25,31 @@ function Detail(props) {
     let pData = props.shoes.find(e => e.id == id);    
     // 식별값(id)에 기반한 상품 object 데이터 가져오기(간략하게 작성했기에 return도 쓰지 않았다.)
 
-    // useEffect 테스틍용 변수
+    // useEffect 테스트용 변수
     let [alertBool, alertBoolChange] = useState(true);
-    let [num, setNum] = useState(1);
+    let [inputData, setInputData] = useState('');
 
     // useEffect
-    // useEffect(() => {
-    //     // setTimeout(() => {
-    //     //     alertBoolChange(false);
-    //     //     console.log(1);
-    //     // }, 2000);
-    //     console.log(1);
+    useEffect(() => {
+        let timer = setTimeout(() => {
+            alertBoolChange(false);
+        }, 2000);
 
-    //     return () => {console.log("컴포넌트 사라짐!!");}
-    // })
+        return () => {
+            console.log("컴포넌트 사라짐!!");
+            clearTimeout(timer); // setTimeout으로 인해 발생할 수 있는 오류 방지를 위해 추가
+        }
+    }, []);
 
-    useEffect(() => {
-        console.log("##############");
-        console.log(1);
-        console.log(2);
-        console.log(3);
-        console.log("##############");
-    });
-    useEffect(() => {
-        console.log("@@@@@@@@@@@@@@@@@@@");
-        console.log(1);
-        console.log(2);
-        console.log("@@@@@@@@@@@@@@@@@@@");
-    });
-    useEffect(() => {
-        console.log("---------------");
-        console.log(1);
-        console.log("---------------");
-    });
 
     return (
         <div className="container">
 
             {/* useEffect 테스트 */}
-            <button onClick={() => {setNum(num+1)}}>+1 버튼</button>
-            <div>{num}</div>
+            { inputData }
+            <br />
+            <input onChange={ (e)=>{ setInputData(e.target.value) }}/>
+
 
             <div className="row">
                 <div className="col-md-6">
