@@ -1,24 +1,33 @@
-// React 내장 함수 부분
+// React 내장 함수
 import { useState } from 'react';
 
-// Component 부분
+// Component
 import { Navbar, Container, Nav, NavDropdown, Button } from 'react-bootstrap';
 import Detail from './Detail.js';
 
-// 데이터 부분
+// 데이터
 import productData, {name1 as apple, name2} from './data.js';
 import {name3} from './data.js';
 
-// Router 부분
+// Router
 import { Link, Route, Switch } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 
-// css 부분
+// css
 import './App.css';
+
+// ajax
+import axios from 'axios';
 
 function App() {
   // 상품데이터
   let [shoes, shoesChange] = useState(productData);
+
+  // ajax를 통해 가져온 상품데이터
+  let [ajaxData, setAjaxData] = useState([]);
+
+  // ajax를 통해 가져온 상품데이터 레이아웃 UI on/off 설정
+  let [newLayout, setNewLayout] = useState(false);
 
   return (
     <div className="App">
@@ -74,8 +83,31 @@ function App() {
           <div>새로 만든 route입니다</div>
         </Route>
       </Switch>
+    
+      <button className="btn btn-primary" onClick={() => {
+              axios.get('https://codingapple1.github.io/shop/data2.json')
+              .then((result) => {
+                let newShoseArr = [...shoes, ...result.data];
+                console.log(newShoseArr);
+                shoesChange(newShoseArr);
+                // setNewLayout(true);
+              })
+              .catch(() => {console.log(2)});
+      }}>더보기</button>
 
+      {/* <div className="container">
+        <div className="row">
+        {
+          newLayout
+          ?
 
+              ajaxData.map((e, index) => {
+              return (<Card shoes={ajaxData} index={index} key={index}></Card>);
+            })
+            : null
+          }
+        </div>
+      </div> */}
     </div>
   )
 }
@@ -93,7 +125,7 @@ function Jumbotron() {
 }
 
 function Card(props) {
-  let imgSrc = `https://codingapple1.github.io/shop/shoes${props.index + 1}.jpg`
+  let imgSrc = `https://codingapple1.github.io/shop/shoes${props.shoes[props.index].id + 1}.jpg`
   return(
       <div className="col-md-4">
         <img src={imgSrc} alt="" srcSet="" width="100%"/>
