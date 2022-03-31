@@ -1,5 +1,5 @@
 // React 내장 함수
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // Component
 import { Navbar, Container, Nav, NavDropdown, Button } from 'react-bootstrap';
@@ -23,11 +23,22 @@ function App() {
   // 상품데이터
   let [shoes, shoesChange] = useState(productData);
 
-  // ajax를 통해 가져온 상품데이터
-  let [ajaxData, setAjaxData] = useState([]);
+  // 더보기 버튼 on/off 설정
+  let [showMorebtn, setShowMorebtn] = useState(true);
 
-  // ajax를 통해 가져온 상품데이터 레이아웃 UI on/off 설정
-  let [newLayout, setNewLayout] = useState(false);
+  // URL주소(data2.json)의 숫자 증가 변수
+  let [urlNum, setUrlNum] = useState(2);
+
+  useEffect(() => {
+    // 페이지 방문과 동시에 Ajax 요청하기
+    axios.get(`https://codingapple1.github.io/shop/data${urlNum}.json`)
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((result) => {
+      console.log(result);
+    });
+  }, []);
 
   return (
     <div className="App">
@@ -83,31 +94,31 @@ function App() {
           <div>새로 만든 route입니다</div>
         </Route>
       </Switch>
-    
-      <button className="btn btn-primary" onClick={() => {
-              axios.get('https://codingapple1.github.io/shop/data2.json')
+
+      {
+        showMorebtn
+        ? (
+          <button className="btn btn-primary" onClick={() => {
+              // axios.get('https://codingapple1.github.io/shop/data2.json')
+              axios.get(`https://codingapple1.github.io/shop/data${urlNum}.json`)
               .then((result) => {
                 let newShoseArr = [...shoes, ...result.data];
-                console.log(newShoseArr);
                 shoesChange(newShoseArr);
-                // setNewLayout(true);
+                setUrlNum(urlNum + 1);
               })
-              .catch(() => {console.log(2)});
-      }}>더보기</button>
+              .catch(() => {
+                alert("데이터 못 가져옴");
+              });
+          }}>더보기</button>
+        )
+        : null
+      }
 
-      {/* <div className="container">
-        <div className="row">
-        {
-          newLayout
-          ?
-
-              ajaxData.map((e, index) => {
-              return (<Card shoes={ajaxData} index={index} key={index}></Card>);
-            })
-            : null
-          }
-        </div>
-      </div> */}
+      <button onClick={() => {
+        axios.post('https://codingapple1.github.io/shop/data2.json', { id : 'test', pw : 1234})
+        .then((result) => {console.log(result);})
+        .catch((result) => {console.log(result);})
+      }}>POST 요청하기</button>
     </div>
   )
 }
@@ -125,7 +136,8 @@ function Jumbotron() {
 }
 
 function Card(props) {
-  let imgSrc = `https://codingapple1.github.io/shop/shoes${props.shoes[props.index].id + 1}.jpg`
+  let imgSrc = `https://codingapple1.github.io/shop/shoes${props.shoes[props.index].id + 1}.jpg`;
+
   return(
       <div className="col-md-4">
         <img src={imgSrc} alt="" srcSet="" width="100%"/>
