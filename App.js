@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 
 // Component
-import { Navbar, Container, Nav, NavDropdown, Button } from 'react-bootstrap';
+import { Navbar, Container, Nav, NavDropdown, Button, Spinner } from 'react-bootstrap';
 import Detail from './Detail.js';
 
 // 데이터
@@ -28,6 +28,13 @@ function App() {
 
   // URL주소(data2.json)의 숫자 증가 변수
   let [urlNum, setUrlNum] = useState(2);
+  
+  // 로딩중 UI 보여주고 말고 변수
+  let [loadingUi, setLoadingUi] = useState(false);
+
+  // 재고 데이터
+  // [10,11,12]는 각각 상품 (id : 0, id : 1, id : 2)의 재고 수량이다.
+  let [stock, setStock] = useState([10,11,12]);
 
   useEffect(() => {
     // 페이지 방문과 동시에 Ajax 요청하기
@@ -87,7 +94,7 @@ function App() {
         </Route>
 
         <Route path="/detail/:id">
-          <Detail shoes={shoes}/>
+          <Detail shoes={shoes} stock={stock} setStock={setStock}/>
         </Route>
 
         <Route path="/:id">
@@ -99,17 +106,28 @@ function App() {
         showMorebtn
         ? (
           <button className="btn btn-primary" onClick={() => {
-              // axios.get('https://codingapple1.github.io/shop/data2.json')
+              setLoadingUi(true);
               axios.get(`https://codingapple1.github.io/shop/data${urlNum}.json`)
               .then((result) => {
                 let newShoseArr = [...shoes, ...result.data];
                 shoesChange(newShoseArr);
                 setUrlNum(urlNum + 1);
+                setLoadingUi(false);
               })
               .catch(() => {
                 alert("데이터 못 가져옴");
               });
           }}>더보기</button>
+        )
+        : null
+      }
+
+      {
+        loadingUi
+        ? (
+        <div>
+          <Spinner animation="border"/>
+        </div>
         )
         : null
       }
