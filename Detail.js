@@ -1,5 +1,5 @@
 // React 내장 함수
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 // Router
 import { useHistory, useParams } from 'react-router-dom';
@@ -7,6 +7,9 @@ import { useHistory, useParams } from 'react-router-dom';
 // css
 import './Detail.scss';
 import styled from 'styled-components';
+
+// context
+import {stockContext} from './App.js';
 
 // 변수 이름은 대문자로 작성해야한다.
 // Box라는 이름의 component가 만들어졌다.
@@ -24,7 +27,6 @@ let Title = styled.h4`
 let colorName = "red";
 
 function Detail(props) {
-
     let history = useHistory();
     let {id} = useParams();
     
@@ -105,8 +107,16 @@ function Detail(props) {
 }
 
 function Info(props) {
+    // import & export를 이용한 context 사용
+    {/* 여러개의 value를 전달하고 싶을때는 object 모양을 이용하므로 destructring 문법을 이용해 각 변수의 값을 꺼냈다. */}
+    let {stock, showMorebtn} = useContext(stockContext);
     return (
-        <p>재고 : {props.stock[props.id]}</p>
+        <>
+            <p>재고 : {props.stock[props.id]}</p>
+
+            {/* import & export를 이용한 context 사용 */}
+            <p>재고 : {stock[props.id]}</p>
+        </>
     );
 }
 

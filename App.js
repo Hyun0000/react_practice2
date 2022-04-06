@@ -1,5 +1,5 @@
 // React 내장 함수
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 
 // Component
 import { Navbar, Container, Nav, NavDropdown, Button, Spinner } from 'react-bootstrap';
@@ -18,6 +18,11 @@ import './App.css';
 
 // ajax
 import axios from 'axios';
+
+// Context API 연습
+export let stockContext = React.createContext();
+
+let numContext = React.createContext();
 
 function App() {
   // 상품데이터
@@ -81,20 +86,49 @@ function App() {
         <Route exact path="/">
           <Jumbotron/>
           <>
+          
             <div className="container">
               <div className="row">
-            {
-              shoes.map(function(e, index) {
-                return (<Card index={index} shoes={shoes} key={index}/>);
-              })
-            }
+                <stockContext.Provider value={stock}> 
+                {
+                  shoes.map(function(e, index) {
+                    return (
+                        <Card index={index} shoes={shoes} key={index}/>
+                        );
+                      })
+                }
+                </stockContext.Provider>
               </div>
             </div>
+          
+            {
+              showMorebtn
+              ? (
+                <button className="btn btn-primary" onClick={() => {
+                    setLoadingUi(true);
+                    axios.get(`https://codingapple1.github.io/shop/data${urlNum}.json`)
+                    .then((result) => {
+                      let newShoseArr = [...shoes, ...result.data];
+                      shoesChange(newShoseArr);
+                      setUrlNum(urlNum + 1);
+                      setLoadingUi(false);
+                    })
+                    .catch(() => {
+                      setLoadingUi(false);  // 데이터 가져오기를 실패해도 우선 로딩중 UI를 안 보이게 한다.
+                      alert("데이터 못 가져옴");
+                    });
+                }}>더보기</button>
+              )
+              : null
+            }
           </>
         </Route>
 
         <Route path="/detail/:id">
-          <Detail shoes={shoes} stock={stock} setStock={setStock}/>
+          {/* 여러개의 value를 전달하고 싶을때는 object 모양을 이용해 전달한다. */}
+          <stockContext.Provider value={{stock : stock, showMorebtn : showMorebtn}}>
+            <Detail shoes={shoes} stock={stock} setStock={setStock}/>
+          </stockContext.Provider>
         </Route>
 
         <Route path="/:id">
@@ -102,25 +136,6 @@ function App() {
         </Route>
       </Switch>
 
-      {
-        showMorebtn
-        ? (
-          <button className="btn btn-primary" onClick={() => {
-              setLoadingUi(true);
-              axios.get(`https://codingapple1.github.io/shop/data${urlNum}.json`)
-              .then((result) => {
-                let newShoseArr = [...shoes, ...result.data];
-                shoesChange(newShoseArr);
-                setUrlNum(urlNum + 1);
-                setLoadingUi(false);
-              })
-              .catch(() => {
-                alert("데이터 못 가져옴");
-              });
-          }}>더보기</button>
-        )
-        : null
-      }
 
       {
         loadingUi
@@ -155,13 +170,26 @@ function Jumbotron() {
 
 function Card(props) {
   let imgSrc = `https://codingapple1.github.io/shop/shoes${props.shoes[props.index].id + 1}.jpg`;
+  // let stock = useContext(stockContext);
 
   return(
       <div className="col-md-4">
+        {/* <div>{stock}</div> */}
         <img src={imgSrc} alt="" srcSet="" width="100%"/>
         <h4>{props.shoes[props.index].title}</h4>
         <p>{props.shoes[props.index].content} & {props.shoes[props.index].price}</p>
+        <numContext.Provider value={props.index}>
+          <Test></Test>
+        </numContext.Provider>
       </div>
+  )
+}
+
+function Test() {
+  let stock = useContext(stockContext);
+  let num = useContext(numContext);
+  return (
+    <p>재고 : {stock[num]}</p>
   )
 }
 
