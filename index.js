@@ -8,10 +8,22 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, HashRouter} from 'react-router-dom';
 // cf) from 부분에 ./ 같은거 없이 'react' 같은 식으로 있으면 대부분 라이브러리 이름이라고 생각
 
+// Redux
+import {Provider} from 'react-redux';
+import {createStore} from 'redux';
+
+let store = createStore(()=>{ 
+  return [
+    {id : 0, name : '멋진신발', quan : 2}
+  ]
+});
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

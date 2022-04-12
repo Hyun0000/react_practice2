@@ -4,6 +4,7 @@ import React, { useEffect, useState, useContext } from 'react';
 // Component
 import { Navbar, Container, Nav, NavDropdown, Button, Spinner } from 'react-bootstrap';
 import Detail from './Detail.js';
+import Cart from './Cart';
 
 // 데이터
 import productData, {name1 as apple, name2} from './data.js';
@@ -121,6 +122,11 @@ function App() {
               )
               : null
             }
+            <button onClick={() => {
+              axios.post('https://codingapple1.github.io/shop/data2.json', { id : 'test', pw : 1234})
+              .then((result) => {console.log(result);})
+              .catch((result) => {console.log(result);})
+            }}>POST 요청하기</button>
           </>
         </Route>
 
@@ -129,6 +135,10 @@ function App() {
           <stockContext.Provider value={{stock : stock, showMorebtn : showMorebtn}}>
             <Detail shoes={shoes} stock={stock} setStock={setStock}/>
           </stockContext.Provider>
+        </Route>
+
+        <Route path="/cart">
+          <Cart/>
         </Route>
 
         <Route path="/:id">
@@ -147,11 +157,7 @@ function App() {
         : null
       }
 
-      <button onClick={() => {
-        axios.post('https://codingapple1.github.io/shop/data2.json', { id : 'test', pw : 1234})
-        .then((result) => {console.log(result);})
-        .catch((result) => {console.log(result);})
-      }}>POST 요청하기</button>
+
     </div>
   )
 }
