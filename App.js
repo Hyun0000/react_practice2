@@ -4,7 +4,7 @@ import React, { useEffect, useState, useContext } from 'react';
 // Component
 import { Navbar, Container, Nav, NavDropdown, Button, Spinner } from 'react-bootstrap';
 import Detail from './Detail.js';
-import Cart from './Cart';
+import Cart from './Cart.js';
 
 // 데이터
 import productData, {name1 as apple, name2} from './data.js';
@@ -46,10 +46,10 @@ function App() {
     // 페이지 방문과 동시에 Ajax 요청하기
     axios.get(`https://codingapple1.github.io/shop/data${urlNum}.json`)
     .then((result) => {
-      console.log(result);
+      // console.log(result);
     })
     .catch((result) => {
-      console.log(result);
+      // console.log(result);
     });
   }, []);
 
