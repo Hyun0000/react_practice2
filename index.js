@@ -10,7 +10,7 @@ import {BrowserRouter, HashRouter} from 'react-router-dom';
 
 // Redux
 import {Provider, useStore} from 'react-redux';
-import {createStore} from 'redux';
+import {createStore, combineReducers} from 'redux';
 
 // reducer와 dispatch 배우기 전 store 생성
 // let store = createStore(() => {
@@ -30,30 +30,56 @@ import {createStore} from 'redux';
 // let store = createStore(reducer);
 
 // reducer 만드는 방법2
-let defaultState = 
+// 상품 데이터
+let defaultPrState = 
   [
     {id : 0, name : '멋진신발', quan : 2},
     {id : 1, name : '멋진신발2', quan : 4}
   ];
 
-function reducer(state = defaultState, action) {
+function reducer(state = defaultPrState, action) {
+
+  console.log("-------------------reducer-------------------");
+  console.log(action.type);
+  console.log(state);
+  console.log("-------------------reducer-------------------");
+
   if(action.type === '수량증가') {
-    let copyState = [...state];
-    copyState[action.num].quan++;
+    let copyState = [...state]; copyState[action.num].quan++;
     return copyState;
   } else if(action.type === '수량감소') {
-    let copyState = [...state];
-    copyState[action.num].quan--;
-    // 수량이 0 이하로 출력되는거 방지
-    if(copyState[action.num].quan < 0) {
-      copyState[action.num].quan = 0;
-    }
+    let copyState = [...state]; copyState[action.num].quan--;
+
+    // 수량이 0 미만으로 출력되는거 방지
+    if(copyState[action.num].quan < 0) { copyState[action.num].quan = 0; }
     return copyState;
   } else {
     return state;
   }
 }
-let store = createStore(reducer);
+
+// UI on/off 데이터
+let defaultalert = true;
+
+function reducer2(state = defaultalert, action) {
+  console.log("-------------------reducer2-------------------");
+  console.log(action.type);
+  console.log(state);
+  console.log("-------------------reducer2-------------------");
+  // console.log(action.type);
+  if(action.type === "닫아") {
+    return false;
+  } else {
+    return state;
+    // return true; 왜 이걸 하면 안 되지?
+  }
+}
+
+// store가 1개 일때
+// let store = createStore(reducer);
+
+// store가 2개 이상 일때
+let store = createStore(combineReducers({reducer, reducer2}));
 
 ReactDOM.render(
   <React.StrictMode>
